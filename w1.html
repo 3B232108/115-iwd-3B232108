@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>周庠賓｜個人介紹</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, "Microsoft JhengHei", sans-serif;
+            background-color: #15173D;
+            color: white;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 20px 10%;
+            border-bottom: 1px solid #2d305c;
+        }
+
+        nav h2 {
+            color: #00D9A3;
+            margin: 0;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+        }
+
+        nav a:hover {
+            color: #00D9A3;
+        }
+
+        .hero {
+            min-height: 500px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 60px;
+
+            padding: 60px 10%;
+        }
+
+        .avatar {
+            width: 220px;
+            height: 220px;
+
+            background-color: #777;
+            border-radius: 50%;
+
+            border: 6px solid #00D9A3;
+        }
+
+        .intro {
+            max-width: 600px;
+        }
+
+        .intro h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .intro h1 span {
+            color: #00D9A3;
+        }
+
+        .intro h2 {
+            color: #00D9A3;
+            font-weight: normal;
+        }
+
+        .intro p {
+            color: #cccccc;
+            font-size: 18px;
+            line-height: 1.8;
+        }
+
+        section {
+            padding: 60px 10%;
+        }
+
+        section h2 {
+            text-align: center;
+            color: #00D9A3;
+            font-size: 32px;
+            margin-bottom: 40px;
+        }
+
+        .cards {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            width: 280px;
+
+            background-color: #20234D;
+            border-radius: 15px;
+
+            padding: 30px;
+            text-align: center;
+
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border: 1px solid #00D9A3;
+        }
+
+        .card h3 {
+            color: #00D9A3;
+        }
+
+        .card p {
+            color: #cccccc;
+            line-height: 1.6;
+        }
+
+        .skills {
+            max-width: 700px;
+            margin: auto;
+        }
+
+        .skill {
+            margin-bottom: 25px;
+        }
+
+        .skill-name {
+            margin-bottom: 8px;
+        }
+
+        .skill-bar {
+            height: 12px;
+
+            background-color: #30335f;
+            border-radius: 20px;
+
+            overflow: hidden;
+        }
+
+        .skill-value {
+            height: 100%;
+
+            background-color: #00D9A3;
+            border-radius: 20px;
+        }
+
+        footer {
+            text-align: center;
+
+            padding: 30px;
+
+            border-top: 1px solid #2d305c;
+            color: #999999;
+        }
+
+        @media screen and (max-width: 700px) {
+
+            nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .avatar {
+                width: 170px;
+                height: 170px;
+            }
+
+            .intro h1 {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+
+        <h2>My Website</h2>
+
+        <div>
+            <a href="#about">關於我</a>
+            <a href="#hobby">興趣</a>
+            <a href="#skill">技能</a>
+        </div>
+
+    </nav>
+
+
+    <div class="hero" id="about">
+
+        <div class="avatar"></div>
+
+        <div class="intro">
+
+            <h2>Hello！我是</h2>
+
+            <h1>
+                <span>周庠賓</span>
+            </h1>
+
+            <p>
+                我目前就讀資訊管理系，
+                對程式設計、人工智慧、遊戲開發與網頁設計很有興趣。
+                平常喜歡研究新的科技，也喜歡嘗試製作各種有趣的程式與作品。
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <section id="hobby">
+
+        <h2>我的興趣</h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>💻 程式設計</h3>
+
+                <p>
+                    喜歡學習 Python、C#、HTML，
+                    並嘗試製作不同類型的程式。
+                </p>
+            </div>
+
+
+            <div class="card">
+                <h3>🎮 遊戲開發</h3>
+
+                <p>
+                    對 Unity 遊戲開發很有興趣，
+                    喜歡研究遊戲系統與互動設計。
+                </p>
+            </div>
+
+
+            <div class="card">
+                <h3>🤖 人工智慧</h3>
+
+                <p>
+                    喜歡研究 AI、深度學習與各種新型態的人工智慧應用。
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section id="skill">
+
+        <h2>我的技能</h2>
+
+        <div class="skills">
+
+            <div class="skill">
+
+                <div class="skill-name">
+                    HTML / CSS
+                </div>
+
+                <div class="skill-bar">
+                    <div class="skill-value" style="width: 75%;"></div>
+                </div>
+
+            </div>
+
+
+            <div class="skill">
+
+                <div class="skill-name">
+                    Python
+                </div>
+
+                <div class="skill-bar">
+                    <div class="skill-value" style="width: 70%;"></div>
+                </div>
+
+            </div>
+
+
+            <div class="skill">
+
+                <div class="skill-name">
+                    C#
+                </div>
+
+                <div class="skill-bar">
+                    <div class="skill-value" style="width: 65%;"></div>
+                </div>
+
+            </div>
+
+
+            <div class="skill">
+
+                <div class="skill-name">
+                    Unity
+                </div>
+
+                <div class="skill-bar">
+                    <div class="skill-value" style="width: 80%;"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+        © 2026 周庠賓 Personal Website
+    </footer>
+
+</body>
+
+</html>
