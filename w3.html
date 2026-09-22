@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>周庠賓｜個人介紹</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, "Microsoft JhengHei", sans-serif;
+            background-color: #15173D;
+            color: white;
+        }
+
+        header {
+            background-color: #15173D;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: auto;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 20px 30px;
+
+            border-bottom: 1px solid #2d305c;
+        }
+
+        nav h2 {
+            margin: 0;
+            color: #00D9A3;
+            font-size: 26px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #00D9A3;
+        }
+
+        main {
+            width: 100%;
+        }
+
+        .hero {
+            max-width: 1200px;
+            min-height: 520px;
+
+            margin: auto;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            gap: 70px;
+
+            padding: 70px 30px;
+        }
+
+        .avatar {
+            width: 220px;
+            height: 220px;
+
+            background-color: #777777;
+
+            border-radius: 50%;
+            border: 6px solid #00D9A3;
+
+            flex-shrink: 0;
+        }
+
+        .intro {
+            max-width: 650px;
+        }
+
+        .intro h2 {
+            color: #00D9A3;
+            font-size: 24px;
+
+            margin-bottom: 10px;
+        }
+
+        .intro h1 {
+            font-size: 52px;
+
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .intro h1 span {
+            color: #00D9A3;
+        }
+
+        .intro p {
+            color: #cccccc;
+
+            font-size: 18px;
+            line-height: 1.9;
+
+            margin-bottom: 30px;
+        }
+
+        .intro-button {
+            display: inline-block;
+
+            background-color: #00D9A3;
+            color: #15173D;
+
+            padding: 12px 25px;
+
+            border-radius: 8px;
+
+            text-decoration: none;
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+        .intro-button:hover {
+            transform: translateY(-3px);
+            opacity: 0.85;
+        }
+
+        section {
+            padding: 70px 30px;
+        }
+
+        section h2 {
+            text-align: center;
+
+            color: #00D9A3;
+
+            font-size: 34px;
+
+            margin-top: 0;
+            margin-bottom: 45px;
+        }
+
+        #hobby {
+            background-color: #111331;
+        }
+
+        .cards {
+            max-width: 1000px;
+            margin: auto;
+
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+
+            gap: 16px;
+
+            flex-wrap: wrap;
+        }
+
+        .card {
+            flex: 1 1 280px;
+            max-width: 310px;
+            min-height: 230px;
+
+            background-color: #20234D;
+
+            border-radius: 15px;
+
+            padding: 35px 25px;
+
+            text-align: center;
+
+            border: 1px solid transparent;
+
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+
+            border-color: #00D9A3;
+        }
+
+        .card .icon {
+            font-size: 42px;
+
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            color: #00D9A3;
+
+            font-size: 22px;
+
+            margin-top: 0;
+        }
+
+        .card p {
+            color: #cccccc;
+
+            line-height: 1.7;
+
+            margin-bottom: 0;
+        }
+
+        #skill {
+            background-color: #15173D;
+        }
+
+        .skills {
+            max-width: 750px;
+            margin: auto;
+        }
+
+        .skill-item {
+            margin-bottom: 28px;
+        }
+
+        .skill-title {
+            display: flex;
+            justify-content: space-between;
+
+            margin-bottom: 8px;
+
+            color: #eeeeee;
+        }
+
+        .skill-bar {
+            width: 100%;
+            height: 12px;
+
+            background-color: #30335f;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+        }
+
+        .skill-value {
+            height: 100%;
+
+            background-color: #00D9A3;
+
+            border-radius: 20px;
+        }
+
+        #contact {
+            background-color: #111331;
+        }
+
+        .contact-container {
+            max-width: 1000px;
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 40px;
+
+            align-items: start;
+        }
+
+        .contact-info {
+            background-color: #20234D;
+
+            padding: 35px;
+
+            border-radius: 15px;
+        }
+
+        .contact-info h3 {
+            color: #00D9A3;
+
+            font-size: 24px;
+
+            margin-top: 0;
+        }
+
+        .contact-info p {
+            color: #cccccc;
+
+            line-height: 1.8;
+        }
+
+        .contact-info ul {
+            padding-left: 20px;
+
+            color: #cccccc;
+
+            line-height: 2;
+        }
+
+        .contact-form {
+            background-color: #20234D;
+
+            padding: 35px;
+
+            border-radius: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: #00D9A3;
+
+            font-weight: bold;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+
+            padding: 13px 14px;
+
+            background-color: #15173D;
+            color: white;
+
+            border: 1px solid #3b3f72;
+            border-radius: 8px;
+
+            font-family: inherit;
+            font-size: 16px;
+
+            outline: none;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #00D9A3;
+        }
+
+        textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+
+            padding: 13px;
+
+            background-color: #00D9A3;
+            color: #15173D;
+
+            border: none;
+            border-radius: 8px;
+
+            font-size: 17px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        button:hover {
+            opacity: 0.85;
+
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+
+            padding: 30px 20px;
+
+            background-color: #15173D;
+
+            border-top: 1px solid #2d305c;
+
+            color: #999999;
+        }
+
+
+        /* 平板 */
+
+        @media screen and (max-width: 900px) {
+
+            .hero {
+                gap: 40px;
+            }
+
+            .avatar {
+                width: 190px;
+                height: 190px;
+            }
+
+            .intro h1 {
+                font-size: 44px;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        /* 手機 */
+
+        @media screen and (max-width: 768px) {
+
+            header {
+                position: static;
+            }
+
+            nav {
+                flex-direction: column;
+
+                gap: 18px;
+
+                padding: 20px;
+            }
+
+            .nav-links {
+                width: 100%;
+
+                justify-content: center;
+
+                gap: 18px;
+
+                flex-wrap: wrap;
+            }
+
+            .hero {
+                min-height: auto;
+
+                flex-direction: column;
+
+                text-align: center;
+
+                gap: 30px;
+
+                padding: 50px 20px;
+            }
+
+            .avatar {
+                width: 170px;
+                height: 170px;
+            }
+
+            .intro {
+                width: 100%;
+            }
+
+            .intro h2 {
+                font-size: 21px;
+            }
+
+            .intro h1 {
+                font-size: 38px;
+            }
+
+            .intro p {
+                font-size: 16px;
+
+                line-height: 1.8;
+            }
+
+            section {
+                padding: 55px 20px;
+            }
+
+            section h2 {
+                font-size: 29px;
+
+                margin-bottom: 30px;
+            }
+
+            .cards {
+                flex-direction: column;
+
+                align-items: center;
+
+                gap: 16px;
+            }
+
+            .card {
+                width: 100%;
+
+                max-width: 420px;
+
+                min-height: auto;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+
+                gap: 20px;
+            }
+
+            .contact-info,
+            .contact-form {
+                padding: 25px 20px;
+            }
+
+        }
+
+
+        /* 小型手機 */
+
+        @media screen and (max-width: 480px) {
+
+            nav h2 {
+                font-size: 22px;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            nav a {
+                font-size: 14px;
+            }
+
+            .avatar {
+                width: 145px;
+                height: 145px;
+
+                border-width: 4px;
+            }
+
+            .intro h1 {
+                font-size: 32px;
+            }
+
+            .intro h2 {
+                font-size: 19px;
+            }
+
+            .intro-button {
+                width: 100%;
+
+                padding: 13px;
+            }
+
+            section {
+                padding: 45px 16px;
+            }
+
+            section h2 {
+                font-size: 26px;
+            }
+
+            .card {
+                padding: 28px 20px;
+            }
+
+            .skill-title {
+                font-size: 14px;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <header>
+
+        <nav>
+
+            <h2>My Website</h2>
+
+            <div class="nav-links">
+
+                <a href="#about">關於我</a>
+
+                <a href="#hobby">興趣</a>
+
+                <a href="#skill">技能</a>
+
+                <a href="#contact">聯絡我</a>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+    <main>
+
+        <section class="hero" id="about">
+
+            <div class="avatar"></div>
+
+
+            <div class="intro">
+
+                <h2>Hello！我是</h2>
+
+                <h1>
+                    <span>周庠賓</span>
+                </h1>
+
+                <p>
+                    我目前就讀資訊管理系，
+                    對程式設計、人工智慧、遊戲開發與網頁設計很有興趣。
+                    平常喜歡研究新的科技，
+                    也喜歡嘗試製作各種有趣的程式與作品。
+                </p>
+
+                <a href="#hobby" class="intro-button">
+                    看看我的興趣
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <section id="hobby">
+
+            <h2>我的興趣</h2>
+
+            <div class="cards">
+
+                <div class="card">
+
+                    <div class="icon">
+                        💻
+                    </div>
+
+                    <h3>程式設計</h3>
+
+                    <p>
+                        喜歡學習 Python、C#、HTML，
+                        並嘗試製作不同類型的程式，
+                        也會研究新的開發工具。
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="icon">
+                        🎮
+                    </div>
+
+                    <h3>遊戲開發</h3>
+
+                    <p>
+                        對 Unity 遊戲開發很有興趣，
+                        喜歡研究遊戲系統、
+                        多人連線與互動設計。
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="icon">
+                        🤖
+                    </div>
+
+                    <h3>人工智慧</h3>
+
+                    <p>
+                        喜歡研究 AI、深度學習，
+                        以及各種人工智慧相關技術與應用。
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section id="skill">
+
+            <h2>我的技能</h2>
+
+            <div class="skills">
+
+
+                <div class="skill-item">
+
+                    <div class="skill-title">
+
+                        <span>HTML / CSS</span>
+
+                        <span>75%</span>
+
+                    </div>
+
+                    <div class="skill-bar">
+
+                        <div
+                            class="skill-value"
+                            style="width: 75%;">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="skill-item">
+
+                    <div class="skill-title">
+
+                        <span>Python</span>
+
+                        <span>70%</span>
+
+                    </div>
+
+                    <div class="skill-bar">
+
+                        <div
+                            class="skill-value"
+                            style="width: 70%;">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="skill-item">
+
+                    <div class="skill-title">
+
+                        <span>C#</span>
+
+                        <span>65%</span>
+
+                    </div>
+
+                    <div class="skill-bar">
+
+                        <div
+                            class="skill-value"
+                            style="width: 65%;">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="skill-item">
+
+                    <div class="skill-title">
+
+                        <span>Unity</span>
+
+                        <span>80%</span>
+
+                    </div>
+
+                    <div class="skill-bar">
+
+                        <div
+                            class="skill-value"
+                            style="width: 80%;">
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section id="contact">
+
+            <h2>聯絡我</h2>
+
+            <div class="contact-container">
+
+
+                <div class="contact-info">
+
+                    <h3>有想說的話嗎？</h3>
+
+                    <p>
+                        如果對我的作品或興趣有任何想法，
+                        可以透過右邊的表單留言給我。
+                    </p>
+
+                    <ul>
+                        <li>姓名與 Email 為必填</li>
+
+                        <li>可以留下想說的內容</li>
+
+                        <li>支援電腦與手機瀏覽</li>
+                    </ul>
+
+                </div>
+
+
+                <form class="contact-form">
+
+                    <div class="form-group">
+
+                        <label for="name">
+                            姓名
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="請輸入姓名"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="請輸入 Email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="message">
+                            留言
+                        </label>
+
+                        <textarea
+                            id="message"
+                            name="message"
+                            placeholder="請輸入留言"
+                        ></textarea>
+
+                    </div>
+
+
+                    <button type="submit">
+                        送出
+                    </button>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        © 2026 周庠賓 Personal Website
+
+    </footer>
+
+</body>
+
+</html>
