@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>臺中 YouBike 即時車位</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Microsoft JhengHei", "PingFang TC", sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      color: #222;
+      background: #f4f4f4;
+    }
+
+    .wrap {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 1rem 1rem 2rem;
+    }
+
+    h1 {
+      margin: 0 0 1rem;
+      font-size: clamp(1.35rem, 4vw, 1.75rem);
+    }
+
+  .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 0.75rem;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .toolbar label {
+      font-weight: bold;
+    }
+
+    .toolbar input[type="text"] {
+      flex: 1 1 140px;
+      min-width: 120px;
+      padding: 0.5rem 0.6rem;
+      border: 1px solid #aaa;
+      border-radius: 4px;
+    }
+
+    button {
+      padding: 0.5rem 0.85rem;
+      border: 1px solid #666;
+      border-radius: 4px;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #eee;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .filter-row {
+      margin-bottom: 1rem;
+    }
+
+    .filter-row label {
+      font-weight: normal;
+      cursor: pointer;
+    }
+
+    #status {
+      min-height: 1.5em;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+      color: #444;
+    }
+
+    #status.error {
+      color: #c00;
+      font-weight: bold;
+    }
+
+    #status.loading {
+      color: #555;
+    }
+
+    #results {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 0.85rem 1rem;
+    }
+
+    .card h2 {
+      margin: 0 0 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    .card .meta {
+      font-size: 0.9rem;
+      color: #555;
+      margin-bottom: 0.35rem;
+    }
+
+    .card .nums {
+      margin-top: 0.5rem;
+      display: flex;
+      gap: 1.25rem;
+    }
+
+    .card .nums span {
+      display: block;
+      font-size: 0.85rem;
+      color: #666;
+    }
+
+    .card .nums strong {
+      font-size: 1.5rem;
+      color: #1a6b3c;
+    }
+
+    .card .nums strong.zero {
+      color: #c00;
+    }
+
+    .empty-msg {
+      grid-column: 1 / -1;
+      padding: 1rem;
+      text-align: center;
+      color: #666;
+      background: #fff;
+      border: 1px dashed #aaa;
+      border-radius: 6px;
+    }
+
+    footer {
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid #ccc;
+      font-size: 0.85rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>臺中 YouBike 即時車位</h1>
+
+    <div class="toolbar">
+      <label for="keyword">站名</label>
+      <input type="text" id="keyword" value="勤益" placeholder="輸入站名關鍵字">
+      <button type="button" id="btn-search">搜尋</button>
+      <button type="button" id="btn-reload">重新抓取資料</button>
+    </div>
+
+    <div class="filter-row">
+      <label>
+        <input type="checkbox" id="only-available"> 只看有車可借
+      </label>
+    </div>
+
+    <p id="status" aria-live="polite"></p>
+    <div id="results"></div>
+
+    <footer>
+      資料來源：臺中市政府交通局－臺中市 YouBike2.0 公開資料
+    </footer>
+  </div>
+
+  <script>
+    const API_URL =
+      "https://newdatacenter.taichung.gov.tw/api/v1/no-auth/resource.download?rid=bf0fee92-9980-418c-a095-2eacf2eb49f6";
+
+    const keywordInput = document.getElementById("keyword");
+    const btnSearch = document.getElementById("btn-search");
+    const btnReload = document.getElementById("btn-reload");
+    const onlyAvailable = document.getElementById("only-available");
+    const statusEl = document.getElementById("status");
+    const resultsEl = document.getElementById("results");
+
+    let stations = [];
+
+    function stripStationName(sna) {
+      return String(sna).replace(/^YouBike2\.0_/, "");
+    }
+
+    function parseSbi(sbi) {
+      return Number(sbi);
+    }
+
+    function formatMday(mday) {
+      const s = String(mday);
+      if (s.length !== 14) {
+        return s;
+      }
+      const y = s.slice(0, 4);
+      const mo = s.slice(4, 6);
+      const d = s.slice(6, 8);
+      const h = s.slice(8, 10);
+      const mi = s.slice(10, 12);
+      const se = s.slice(12, 14);
+      return `${y}/${mo}/${d} ${h}:${mi}:${se}`;
+    }
+
+    function formatNow() {
+      const n = new Date();
+      const pad = (v) => String(v).padStart(2, "0");
+      return (
+        `${n.getFullYear()}/${pad(n.getMonth() + 1)}/${pad(n.getDate())} ` +
+        `${pad(n.getHours())}:${pad(n.getMinutes())}:${pad(n.getSeconds())}`
+      );
+    }
+
+    function setStatus(text, kind) {
+      statusEl.textContent = text;
+      statusEl.className = kind || "";
+    }
+
+    function renderCards() {
+      const keyword = keywordInput.value.trim();
+      let list = stations;
+
+      if (keyword) {
+        list = list.filter((st) => stripStationName(st.sna).includes(keyword));
+      }
+
+      if (onlyAvailable.checked) {
+        list = list.filter((st) => parseSbi(st.sbi) > 0);
+      }
+
+      resultsEl.innerHTML = "";
+
+      if (list.length === 0) {
+        const p = document.createElement("p");
+        p.className = "empty-msg";
+        p.textContent = "找不到符合的站點";
+        resultsEl.appendChild(p);
+        return;
+      }
+
+      for (const st of list) {
+        const sbi = parseSbi(st.sbi);
+        const card = document.createElement("article");
+        card.className = "card";
+
+        const title = document.createElement("h2");
+        title.textContent = stripStationName(st.sna);
+
+        const area = document.createElement("p");
+        area.className = "meta";
+        area.textContent = `行政區：${st.sarea}`;
+
+        const addr = document.createElement("p");
+        addr.className = "meta";
+        addr.textContent = `地址：${st.ar}`;
+
+        const nums = document.createElement("div");
+        nums.className = "nums";
+
+        const borrow = document.createElement("div");
+        const borrowLabel = document.createElement("span");
+        borrowLabel.textContent = "可借車輛";
+        const borrowVal = document.createElement("strong");
+        borrowVal.textContent = String(sbi);
+        if (sbi === 0) {
+          borrowVal.classList.add("zero");
+        }
+        borrow.appendChild(borrowLabel);
+        borrow.appendChild(borrowVal);
+
+        const returnSlot = document.createElement("div");
+        const returnLabel = document.createElement("span");
+        returnLabel.textContent = "可還空位";
+        const returnVal = document.createElement("strong");
+        returnVal.textContent = String(st.bemp);
+        returnSlot.appendChild(returnLabel);
+        returnSlot.appendChild(returnVal);
+
+        nums.appendChild(borrow);
+        nums.appendChild(returnSlot);
+
+        const updated = document.createElement("p");
+        updated.className = "meta";
+        updated.textContent = `資料更新時間：${formatMday(st.mday)}`;
+
+        card.appendChild(title);
+        card.appendChild(area);
+        card.appendChild(addr);
+        card.appendChild(nums);
+        card.appendChild(updated);
+        resultsEl.appendChild(card);
+      }
+    }
+
+    async function fetchStations() {
+      setStatus("資料載入中...", "loading");
+      btnReload.disabled = true;
+      btnSearch.disabled = true;
+
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}：無法取得資料`);
+        }
+        const data = await response.json();
+        if (!Array.isArray(data)) {
+          throw new Error("回傳格式不是陣列");
+        }
+        stations = data;
+        setStatus(`最後更新時間：${formatNow()}`);
+        renderCards();
+      } catch (err) {
+        stations = [];
+        resultsEl.innerHTML = "";
+        setStatus(`錯誤：${err.message}`, "error");
+      } finally {
+        btnReload.disabled = false;
+        btnSearch.disabled = false;
+      }
+    }
+
+    btnSearch.addEventListener("click", () => {
+      if (stations.length === 0) {
+        setStatus("請先重新抓取資料", "error");
+        return;
+      }
+      renderCards();
+    });
+
+    btnReload.addEventListener("click", () => {
+      fetchStations();
+    });
+
+    onlyAvailable.addEventListener("change", () => {
+      if (stations.length > 0) {
+        renderCards();
+      }
+    });
+
+    keywordInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        btnSearch.click();
+      }
+    });
+
+    fetchStations();
+  </script>
+</body>
+</html>
